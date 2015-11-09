@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .header,
+        .uneditable,
+        .main {
+            padding-bottom: 15px;
+            width: 900px;
+            margin: 25px auto 0;
+        }
+        h1, h2, p {
+            margin: 0;
+            padding-bottom: 5px;
+        }
+        .editable:hover {
+            outline: 5px solid rgba(0, 0, 0, 0.2);
+        }
+        .editable:focus {
+            outline: 5px solid rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="header editable">
+        <h1>Editable region</h1>
+        <p>This area is editable, just click and type!</p>
+        <p>Any changes are immediately saved in your browser, try refreshing the page!</p>
+    </div>
+    <div class="uneditable">
+        <h2>Non-editable areas</h2>
+        <p>This area is not editable</p>
+    </div>
+    <div class="main editable">
+        <h2>Another editable area</h2>
+        <p>This area is also editable.</p>
+    </div>
+
+    <script>
+        var editableAreas = document.querySelectorAll('.editable');
+        for (var i = 0; i < editableAreas.length; i++) {
+            var area = editableAreas[i];
+            area.setAttribute('contenteditable', 'true');
+            var saved = localStorage.getItem(area.className);
+            if (saved) {
+                area.innerHTML = saved;
+            }
+            area.addEventListener('keyup', function(event) {
+                var area = event.target;
+                localStorage.setItem(area.className, area.innerHTML);
+            });
+        }
+    </script>
+</body>
+</html>
